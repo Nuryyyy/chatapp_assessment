@@ -2,9 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const {connectDatabase} = require("./pool.js")
 const {corsOptions} = require('./config/corsOptions')
-
 const userRoutes = require("./routes/userRoutes")
-
 const pool = connectDatabase()
 const app = express()
 
@@ -15,6 +13,7 @@ const port = process.env.PORT
 
 // app.use(cors())
 app.use(express.json())
+// app.use(cors({ origin: true }));
 app.use(cors(corsOptions))
 
 //router
@@ -40,7 +39,10 @@ app.get('/',  (req, res)  =>  {
     )  
 })
 
-
+app.get('/public', function(req, res) {
+  res.set('Access-Control-Allow-Origin', '*')
+  res.send("public")
+})
 
 app.get('/api', async (req, res) => {
     try{
