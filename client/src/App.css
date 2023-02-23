@@ -16,6 +16,7 @@ body {
 .backgroundImage{
   background-image: url(https://images.unsplash.com/photo-1611606063065-ee7946f0787a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2874&q=80);
 }
+
 .unknown{
   border-radius: 15px;
 }
@@ -39,3 +40,58 @@ body {
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1))
   }
+
+/* chat */
+
+.background-color{
+  background-color: #3C6255;
+  height: 100vh;
+
+}
+.card{
+  border-radius: 15px;
+}
+
+.scrollbarh{
+  position: relative;
+  height: 400px;
+ 
+  overflow: auto;
+
+}
+
+.avatar{
+  width: 45px;
+  height: 100%;
+}
+
+.messagechat{
+  /* style="background-color: #f5f6f7 */
+  background-color: #EAE7B1;
+
+}
+
+/* .user-message{
+  background-color: #3C6255;
+} */
+.avatar2{
+  /* style="width: 40px; height: 100%;" */
+  width: 40px;
+  height: 100%;
+}
+#chat3 .form-control {
+  border-color: transparent;
+}
+
+#chat3 .form-control:focus {
+  border-color: transparent;
+  box-shadow: inset 0px 0px 0px 1px transparent;
+}
+
+.badge-dot {
+  border-radius: 50%;
+  height: 10px;
+  width: 10px;
+  margin-left: 2.9rem;
+  margin-top: -.75rem;
+}
