@@ -1,8 +1,10 @@
 import React from 'react'
 import '../App.css'
-
+import Topbar from '../components/Topbar'
 function Chat() {
   return (
+    <>
+    <header><Topbar /></header>
   <section className='background-color'>
   <div className="container py-5">
 
@@ -281,7 +283,8 @@ function Chat() {
 
         </div>
         
-</section>
+      </section>
+      </>
   )
 }
 

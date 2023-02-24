@@ -95,3 +95,15 @@ body {
   margin-left: 2.9rem;
   margin-top: -.75rem;
 }
+
+
+/* Fontawesome icon */
+.logout{
+  margin-right: 5px;;
+}
+
+.profilepic{ 
+  width: 150px;
+  background-size: cover;
+}
+
