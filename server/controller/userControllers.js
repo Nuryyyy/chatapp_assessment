@@ -14,6 +14,7 @@ module.exports.register = async (req, res, next) => {
             username,
             email,
             password,
+            image
             // confirmPassword
         } = req.body
     
@@ -38,7 +39,9 @@ module.exports.register = async (req, res, next) => {
             //generate the uuid using the uuidv4() function
             const newUser = await pool.query(`INSERT INTO userinfo(userid, username, email, password) VALUES ($1, $2, $3, $4) RETURNING *`, [uuidv4(),username, email, bcryptPassword])
             
-            res.status(200).json({username, email})
+        const userid = user.rows[0].userid
+        res.status(200).json({userid })
+        console.log(newUser.rows[0])
     } catch (error) {
         console.error(error.message);
         res.status(500).send({
@@ -75,8 +78,9 @@ module.exports.login = async (req, res, next) => {
     }
   
 
-
-    res.status(200).json({username})
+        const userid = user.rows[0].userid
+        const image = user.rows[0].image
+    res.status(200).json({userid, username, image})
        
     
 
@@ -89,4 +93,22 @@ module.exports.login = async (req, res, next) => {
         // });
         next(error)
     }
+}
+    
+module.exports.uploadImage = async (req, res, next) => {
+    try {
+        const { image } = req.body//image.filename
+        // console.log("backendimage:", image)
+        const userID = req.params.userid
+        // console.log("userid", userID)
+      
+        // const username = req.user.username
+       
+        const imageUpload = await pool.query("UPDATE userinfo SET image = $1 WHERE userid = $2", [image, userID])
+        const user =  await pool.query(`SELECT * FROM userinfo WHERE userid = $1`, [userID])
+        res.status(200).send(image)
+    } catch (error) {
+        
     }
+
+}

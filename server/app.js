@@ -3,7 +3,10 @@ const cors = require("cors");
 const {connectDatabase} = require("./pool.js")
 const {corsOptions} = require('./config/corsOptions')
 const userRoutes = require("./routes/userRoutes")
+const bodyParser = require('body-parser')
+const upload = require('./middleware/upload.js')
 const pool = connectDatabase()
+
 const app = express()
 
 
@@ -11,10 +14,11 @@ require("dotenv").config()
 const port = process.env.PORT
 
 
-// app.use(cors())
+//middleware
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.json())
-// app.use(cors({ origin: true }));
 app.use(cors(corsOptions))
+app.use("/upload", express.static("../client/public/uploads/"))
 
 //router
 app.use("/api/auth", userRoutes)
@@ -60,46 +64,18 @@ app.get('/api', async (req, res) => {
 }
 )
 
-//
-
-// app.post('/register', async (req, res) => {
-//     try {
-//         const {
-//             username,
-//             email,
-//             password,
-//             // confirmPassword
-//         } = req.body
-
-//         console.log(`${username}`)
-//         console.log(`${email}`)
-    
-//             //Check if the user is already existing
-//             const user = await pool.query(`SELECT * FROM userinfo WHERE username = $1`, [username])
-//             console.log("2")
-//             if (user.rows.length > 0) {
-//                 res.status(401).send("Username is already taken")
-//             }
-//             console.log(2.5)
-    
-//             //Setup Bcrypt for password hashing
-//             // const salt = await bcrypt.genSalt(10);
-//             // const bcryptPassword = await bcrypt.hash(password, salt);
-//             // const salt = await bcrypt.genSaltSync(10);
-//             // const password = await req.body.password;
-    
-//             //Add the new user into the database
-//             //generate the uuid using the uuidv4() function
-//             console.log("3")
-//             const newUser = await pool.query(`INSERT INTO userinfo(userid, username, email, password) VALUES ($1, $2, $3, $4) RETURNING *`, [uuidv4(),username, email, password])
-// 			res.json(newUser.rows[0])
-//             console.log("4")
-//     } catch (error) {
-//         console.error(error.message);
-//         res.status(500).send({
-//             msg: "Unauthenticated"
-//         });
-//     }
-
-//     }
-// )
+//route to upload photo
+app.post("/upload", (req, res, next) => {
+    upload.single('image')(req, res, function (error) {
+      if (error) {
+        console.log(`upload.single error: ${error}`);
+        return res.sendStatus(500);
+      }
+      const image = req.file
+      // console.log("reqfile:", req.file)
+      console.log("imagefilename:",image.filename)
+    // console.log("reqfile:", req.file)
+    res.status(200).json(image.filename)
+    })
+});
+  
