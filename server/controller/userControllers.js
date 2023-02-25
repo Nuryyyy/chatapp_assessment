@@ -80,7 +80,7 @@ module.exports.login = async (req, res, next) => {
 
         const userid = user.rows[0].userid
         const image = user.rows[0].image
-    res.status(200).json({userid, username, image})
+        res.status(200).json({userid, username, image})
        
     
 
@@ -111,4 +111,20 @@ module.exports.uploadImage = async (req, res, next) => {
         
     }
 
+}
+
+module.exports.getAllUsers = async (req, res) => {
+    try {
+
+        const userID = req.params.userid
+
+        //to get all users info except for the current user
+        const getAllUsers = await pool.query('SELECT userid, username, email, image FROM userinfo EXCEPT SELECT userid, username, email, image FROM userinfo WHERE userid= $1',[userID])
+        
+        // return res.json(getAllUsers.rows)
+        res.status(200).send(getAllUsers.rows)
+        
+    } catch (error) {
+        console.log(error)
+    }
 }

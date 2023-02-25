@@ -2,10 +2,12 @@ const express = require("express");
 const cors = require("cors");
 const {connectDatabase} = require("./pool.js")
 const {corsOptions} = require('./config/corsOptions')
-const userRoutes = require("./routes/userRoutes")
 const bodyParser = require('body-parser')
 const upload = require('./middleware/upload.js')
+const userRoutes = require("./routes/userRoutes")
+const msgRoutes = require("./routes/msgRoutes")
 const pool = connectDatabase()
+const socket = require('socket.io')
 
 const app = express()
 
@@ -22,18 +24,21 @@ app.use("/upload", express.static("../client/public/uploads/"))
 
 //router
 app.use("/api/auth", userRoutes)
+app.use("/api/message", msgRoutes)
 
 
 //to connect with pool
-pool.connect((err) => {
+const server = pool.connect((err) => {
 	if (err) {
 		console.log(err) 
 	}
-	else {
+  else {
+    
 		app.listen(port, () => {
 			console.log(`Server has started on http://localhost:${port}`)
 		})
-	}
+  }
+  
 })
 
 
@@ -78,4 +83,25 @@ app.post("/upload", (req, res, next) => {
     res.status(200).json(image.filename)
     })
 });
+
+const io = socket(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    credentials: true
+  },
+})
   
+global.onlineUsers = new Map();
+io.on("connection", (socket) => {
+  global.chatSocket = socket;
+  socket.on("add-user", (userid) => {
+    onlineUsers.set(userid, socket.id);
+  });
+
+  socket.on("send-msg", (data) => {
+    const sendUserSocket = onlineUsers.get(data.to);
+    if (sendUserSocket) {
+      socket.to(sendUserSocket).emit("msg-receive", data.msg);
+    }
+  });
+});
