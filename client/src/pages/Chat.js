@@ -1,23 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from 'react-router-dom'
-import axios from '../api/axios'
+import axios, { BASE_URL } from '../api/axios'
 import '../App.css'
 import Topbar from '../components/Topbar'
 import Contacts from '../components/Contacts'
 import Welcome from "../components/Welcome";
 import ChatSection from "../components/ChatSection";
+import {io} from 'socket.io-client'
 
 function Chat() {
 
   const getusers_url = 'api/auth/allusers'
   const navigate = useNavigate()
 
+  const socket = useRef()
   const [contacts, setContacts] = useState([])
-  const [currentuser, setCurrentuser] = useState([])
+  // const [currentuser, setCurrentuser] = useState(undefined)
   const [currentChat, setCurrentChat] = useState(undefined)
   const [isLoaded, setIsLoaded] = useState(false)
   
-  //  const currentuser = JSON.parse(localStorage.getItem("chat-user"))  
+   const currentuser = JSON.parse(localStorage.getItem("chat-user"))  
   
   // useEffect(() => {
   //   const getCurrentUser = async () => {
@@ -31,40 +33,33 @@ function Chat() {
 
 
 
-useEffect(() => {
-  const fetchUser = async () => {
-    try {
-      const user = await JSON.parse(
-        localStorage.getItem('chat-user')
-      );
-      setCurrentuser(user);
-    } catch (error) {
-      navigate("/login");
-    }
-  };
-  fetchUser();
-}, [navigate, setCurrentuser]);
-  // }
-  useEffect(() => {
-    const getAllUsers = async () => {
 
-      if (currentuser) {
-        if (currentuser.image) {
-          const response = await axios.get(`${getusers_url}/${currentuser.userid}`)
-          setContacts(response.data)
-        }
-        else {
-          navigate('/')
-        }
+
+useEffect(() => {
+  if (currentuser) {
+    socket.current = io(BASE_URL)
+    socket.current.emit("add-user", currentuser.userid)
+  }
+}, [currentuser])
+
+useEffect(() => {
+  const getAllUsers = async () => {
+    if (currentuser) { // check if currentuser is defined
+      if (currentuser.image) {
+        const response = await axios.get(`${getusers_url}/${currentuser.userid}`)
+        setContacts(response.data)
+      } else {
+        navigate('/')
+      }
     }
-    }
-    getAllUsers()
-  }, [currentuser])
+  }
+  getAllUsers()
+}, []) 
 
   const handleChatChange = (chat) => {
     setCurrentChat(chat);
   };
-  console.log("current", currentChat)
+
   return (
     <>
       <header><Topbar /></header>
@@ -88,7 +83,7 @@ useEffect(() => {
                      {currentChat === undefined ? (
                           <Welcome currentuser={currentuser}/>
                         ) : (
-                          <ChatSection currentChat={currentChat}  currentuser={currentuser}/>
+                          <ChatSection currentChat={currentChat} currentuser={currentuser} socket={socket}   />
                       )}
                       </div>
                    
