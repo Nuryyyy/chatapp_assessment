@@ -12,6 +12,12 @@ body {
   max-height: 100vh;
   overflow: hidden;
 }
+
+html {
+  scroll-behavior: smooth;
+  overflow: auto;
+
+}
 /* Register */
 .backgroundImage{
   background-image: url(https://images.unsplash.com/photo-1611606063065-ee7946f0787a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2874&q=80);
@@ -107,3 +113,36 @@ body {
   background-size: cover;
 }
 
+
+.ewans{
+  background-color: pink;
+}
+
+.selected {
+  background-color: #9a86f3;
+}
+
+.contact {
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+  border-radius: 0.2rem;
+}
+
+/* .welcome{
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    flex-direction: column;
+  
+  
+}; */
+
+.pointer{
+  cursor: pointer;
+}
+
+.btn{
+  display: none;
+  cursor: pointer;
+}

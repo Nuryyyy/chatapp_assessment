@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import Profileview from './Profileview';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,11 +7,20 @@ import '../App.css'
 
 
 
+
 function Topbar() {
 
   const useravatar = JSON.parse(localStorage.getItem("chat-user"))
   const PF = "http://localhost:4000/upload/"
- 
+  const navigate = useNavigate()
+
+
+  //handle logout
+  const handleLogout = async () => {
+    localStorage.clear()
+    navigate('/login')
+}
+
   return (
 
 <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -68,8 +77,9 @@ function Topbar() {
 </button> */}
 
                       {/* <a data-bs-toggle="modal"data-bs-target="#profileview"> */}
+        <div onClick={handleLogout} className="pointer">
         <FontAwesomeIcon icon={faRightFromBracket} className='logout'/>
-  
+        </div>
           <img
             src={PF + `${useravatar.image}`}
             className="rounded-circle"

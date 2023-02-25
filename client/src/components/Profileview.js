@@ -16,7 +16,7 @@ function Profileview() {
   const navigate = useNavigate()
  
    //to retrieve current avatar of user
-  const userItems = JSON.parse(localStorage.getItem("chat-user"))
+  const currentUser = JSON.parse(localStorage.getItem("chat-user"))
 
   useEffect(()=> {
     if(localStorage.getItem('chat-user')){
@@ -41,18 +41,18 @@ function Profileview() {
   e.preventDefault()
   const imgUrl = await upload()
   try {
-    const response = await axios.put(`/api/auth/${userItems.userid}` , 
+    const response = await axios.put(`/api/auth/${currentUser.userid}` , 
     JSON.stringify({
       image: imgUrl
     }),) 
-      userItems.image = response.data
+      currentUser.image = response.data
       localStorage.setItem(
           "chat-user",
-          JSON.stringify(userItems)
+          JSON.stringify(currentUser)
         );
    
     
-    // // localStorage.setItem({ "userItems.image"})
+    // // localStorage.setItem({ "currentUser.image"})
     //   // window.location.reload() 
   } catch (error) {
     console.log(error)
@@ -82,16 +82,16 @@ function Profileview() {
                     {file 
                     ?<img src={URL.createObjectURL(file)} 
                       alt="Profile" className="profilepic rounded-circle shadow-1-strong mb-4"/>
-                : <img src={PF + `${userItems.image}`}
+                : <img src={PF + `${currentUser.image}`}
                     alt="Profile" className="profilepic rounded-circle shadow-1-strong mb-4"/>}
               
                         
           <div className="row d-flex justify-content-center">
         <div className="col-lg-8">
-          <h5 className="mb-3">Maria Kate</h5>
+          <h5 className="mb-3">{currentUser.username}</h5>
           
                 </div>
-                <label htmlFor="file" className="form-label">Change Profile</label>
+                <label htmlFor="file" className="form-label fw-lighter">Change Profile</label>
                 <input
                   className="form-control form-control-sm"
                   id="file"

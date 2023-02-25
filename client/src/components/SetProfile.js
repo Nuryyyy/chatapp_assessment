@@ -10,6 +10,7 @@ import axios from '../api/axios';
 function SetProfile() {
   
   const setProfile_url = '/api/auth/setProfile'
+
   const api = `https://api.multiavatar.com/4645646`;
   const navigate = useNavigate()
 
@@ -28,37 +29,6 @@ function SetProfile() {
 
   }
 
-  // useEffect(() =>{
-  //   const getAvatar = async () =>{
-
-  //     const data = []
-  //     for (let i = 0; i<4; i++){
-  //       const image = await axios.get(
-  //         `${api}/${Math.round(Math.random()*1000)}`,
-
-  //         {
-
-
-  //           headers: {
-  //             'Content-Type': "application/json",
-
-  //           },
-  //             withCredentials: true,
-              
-
-  //         }
-        
-  //       )
-        
-  //       const buffer = new Buffer(image.data)
-  //       data.push(buffer.toString("based64"))
-  //     }
-  //       setAvatar(data)
-  //       setIsLoading(true)
-  //   }
-  //   getAvatar()
-    
-  // })
 
    useEffect(() => {
     (async () => {
