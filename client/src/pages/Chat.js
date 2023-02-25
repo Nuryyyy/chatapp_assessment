@@ -13,11 +13,11 @@ function Chat() {
   const navigate = useNavigate()
 
   const [contacts, setContacts] = useState([])
-  // const [currentuser, setCurrentuser] = useState(undefined)
+  const [currentuser, setCurrentuser] = useState([])
   const [currentChat, setCurrentChat] = useState(undefined)
   const [isLoaded, setIsLoaded] = useState(false)
   
-   const currentuser = JSON.parse(localStorage.getItem("chat-user"))  
+  //  const currentuser = JSON.parse(localStorage.getItem("chat-user"))  
   
   // useEffect(() => {
   //   const getCurrentUser = async () => {
@@ -31,8 +31,19 @@ function Chat() {
 
 
 
-  // if (!localStorage.getItem('chat-user')) {
-  //   navigate('/login')
+useEffect(() => {
+  const fetchUser = async () => {
+    try {
+      const user = await JSON.parse(
+        localStorage.getItem('chat-user')
+      );
+      setCurrentuser(user);
+    } catch (error) {
+      navigate("/login");
+    }
+  };
+  fetchUser();
+}, [navigate, setCurrentuser]);
   // }
   useEffect(() => {
     const getAllUsers = async () => {
@@ -43,7 +54,7 @@ function Chat() {
           setContacts(response.data)
         }
         else {
-          navigate('/chatV2')
+          navigate('/')
         }
     }
     }
