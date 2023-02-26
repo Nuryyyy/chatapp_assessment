@@ -19,6 +19,7 @@ function Contacts({ contacts, changeChat }) {
                 localStorage.getItem("chat-user"))
             setCurrentUserName(data.username)
             setCurrentUserImage(data.image)
+            console.log(data)
         }
 
         getUser()
@@ -27,28 +28,27 @@ function Contacts({ contacts, changeChat }) {
     const changeCurrentChat = (index, contact) => {
 
         setCurrentSelected(index);
-        console.log("index", index)
         changeChat(contact);
-        console.log("contact", contact)
+       
 
     }
     return (
         <>
-            {currentUserImage && currentUserName && (
+           
        
                 <div>
                 
 
 
                         <div className="p-3">
-                            <h5>Contacts</h5>
-                            <div className="input-group rounded mb-3">
+                            <h4>Contacts</h4>
+                            {/* <div className="input-group rounded mb-3">
                                 <input type="search" className="form-control rounded" placeholder="Search" aria-label="Search"
                                     aria-describedby="search-addon" />
                                 <span className="input-group-text border-0" id="search-addon">
                                     <i className="fas fa-search"></i>
                                 </span>
-                            </div>
+                            </div> */}
                             <div data-mdb-perfect-scrollbar="true" className='scrollbarh' >
                                
                             <ul className="list-unstyled mb-0">
@@ -95,7 +95,8 @@ function Contacts({ contacts, changeChat }) {
                     </div>
                                                 
 
-                )}
+          
+            
             
            
        

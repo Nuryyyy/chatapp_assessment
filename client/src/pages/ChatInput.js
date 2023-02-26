@@ -5,6 +5,7 @@ import { IoMdSend } from "react-icons/io";
 import styled from "styled-components";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaperPlane, faSmile } from '@fortawesome/free-solid-svg-icons'
+import '../App.css'
 
 
 
@@ -47,7 +48,7 @@ function ChatInput({ currentUser, handleSendMsg }) {
               
               <input
                 type="text"
-                className="form-control form-control-lg"
+                className=".bg-light form-control form-control-lg"
                 id="inputmsg"
                 placeholder="Type message"
                 onChange={(e) => setMsg(e.target.value)}
@@ -55,7 +56,7 @@ function ChatInput({ currentUser, handleSendMsg }) {
               />
                   {/* <a className="ms-1 text-muted" href="#!"><i className="fas fa-paperclip"></i></a>
                   <a className="ms-3 text-muted" href="#!"><FontAwesomeIcon icon={faSmile} /></a> */}
-                  <button type='submit' id="inputmsg" className='btn'><FontAwesomeIcon icon={faPaperPlane} /> </button>
+                  <button type='submit' id="" className='btn'><FontAwesomeIcon icon={faPaperPlane} /> </button>
                  
 
  

@@ -53,13 +53,16 @@ useEffect(() => {
     const response = await axios.put(`/api/auth/${currentUser.userid}` , 
     JSON.stringify({
       image: imgUrl
-    }),) 
+    }),
+      window.location.reload()
+      ,) 
       currentUser.image = response.data
       localStorage.setItem(
           "chat-user",
-          JSON.stringify(currentUser)
+        JSON.stringify(currentUser)
+           
         );
-
+  
   } catch (error) {
     console.log(error)
   }
