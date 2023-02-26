@@ -52,7 +52,8 @@ function ChatInput({ currentuser, handleSendMsg }) {
                 placeholder="Type message"
                 onChange={(e) => setMsg(e.target.value)}
                 value={msg}
-              />
+          />
+                  {/* EMOOJI should have been here */}
                   {/* <a className="ms-1 text-muted" href="#!"><i className="fas fa-paperclip"></i></a>
                   <a className="ms-3 text-muted" href="#!"><FontAwesomeIcon icon={faSmile} /></a> */}
                   <button type='submit' id="inputmsg" className='btn'><FontAwesomeIcon icon={faPaperPlane} /> </button>

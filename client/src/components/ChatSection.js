@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import ChatInput from './ChatInput'
 import axios from '../api/axios'
-import Topbar from './Topbar';
 // import '../App.css'
 
 
