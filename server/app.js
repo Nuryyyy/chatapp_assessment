@@ -27,31 +27,7 @@ app.use("/api/auth", userRoutes)
 app.use("/api/message", msgRoutes)
 
 
-//to connect with pool
-// pool.connect((err) => {
-// 	if (err) {
-// 		console.log(err) 
-// 	}
-//   else {
-    
-// 		app.listen(port, () => {
-// 			console.log(`Server has started on http://localhost:${port}`)
-// 		})
-//   }
-  
-// })
-// const server = pool.connect((err) => {
-// 	if (err) {
-// 		console.log(err) 
-// 	}
-//   else {
-    
-// 		app.listen(port, () => {
-// 			console.log(`Server has started on http://localhost:${port}`)
-// 		})
-//   }
-  
-// })
+
 
 const server = app.listen(port, () => {
   console.log(`Server has started on http://localhost:${port}`);

@@ -95,6 +95,7 @@ module.exports.login = async (req, res, next) => {
     }
 }
     
+//upload photo using multer
 module.exports.uploadImage = async (req, res, next) => {
     try {
         const { image } = req.body//image.filename
@@ -113,6 +114,7 @@ module.exports.uploadImage = async (req, res, next) => {
 
 }
 
+//get users except the current user
 module.exports.getAllUsers = async (req, res) => {
     try {
 

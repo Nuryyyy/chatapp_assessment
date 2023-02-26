@@ -1,8 +1,5 @@
 const {connectDatabase} = require("../pool.js")
-const bcrypt = require('bcryptjs')
 const { v4: uuidv4 } = require('uuid');
-
-
 const pool = connectDatabase()
 
 module.exports.addMsg = async (req, res) => {
@@ -35,7 +32,7 @@ module.exports.getAllMsg = async (req, res, next) => {
             }
         })
         res.json(projectedMessages)
-    } catch (ex) {
-        next(ex)
+    } catch (error) {
+        next(error)
     }
 }
