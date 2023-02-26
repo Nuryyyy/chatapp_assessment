@@ -28,25 +28,44 @@ app.use("/api/message", msgRoutes)
 
 
 //to connect with pool
-const server = pool.connect((err) => {
-	if (err) {
-		console.log(err) 
-	}
-  else {
+// pool.connect((err) => {
+// 	if (err) {
+// 		console.log(err) 
+// 	}
+//   else {
     
-		app.listen(port, () => {
-			console.log(`Server has started on http://localhost:${port}`)
-		})
-  }
+// 		app.listen(port, () => {
+// 			console.log(`Server has started on http://localhost:${port}`)
+// 		})
+//   }
   
-})
+// })
+// const server = pool.connect((err) => {
+// 	if (err) {
+// 		console.log(err) 
+// 	}
+//   else {
+    
+// 		app.listen(port, () => {
+// 			console.log(`Server has started on http://localhost:${port}`)
+// 		})
+//   }
+  
+// })
+
+const server = app.listen(port, () => {
+  console.log(`Server has started on http://localhost:${port}`);
+});
+
+pool.connect()
+  .then(() => {
+    console.log("Connected to the database");
+  })
+  .catch((err) => {
+    console.error("Error connecting to the database:", err);
+  });
 
 
-app.get('/',  (req, res)  =>  { 
-    res.json(
-	    { info:  'Hello welcome to chat' }
-    )  
-})
 
 app.get('/public', function(req, res) {
   res.set('Access-Control-Allow-Origin', '*')
@@ -84,7 +103,9 @@ app.post("/upload", (req, res, next) => {
     })
 });
 
-const io = socket(server, {
+const io = socket(
+    server,
+  {
   cors: {
     origin: "http://localhost:3000",
     credentials: true
@@ -92,6 +113,7 @@ const io = socket(server, {
 })
   
 global.onlineUsers = new Map();
+
 io.on("connection", (socket) => {
   global.chatSocket = socket;
   socket.on("add-user", (userid) => {

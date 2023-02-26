@@ -29,7 +29,8 @@ module.exports.getAllMsg = async (req, res, next) => {
             return {
                 fromSelf: msg.sender.toString() === from,
                 message: msg.content,
-                time: msg.datemsg
+                time: msg.datemsg,
+                msgid: msg.msgid
 
             }
         })
