@@ -4,6 +4,7 @@ This repository is used for assessment purposes.
 
 PERN STACK WAS USED IN MAKING THIS PROJECT. 
 (PostgreSQL, Express, React, Node)
+
 CSS Framework use: BOOTSTRAP
 
 //DATABASE
