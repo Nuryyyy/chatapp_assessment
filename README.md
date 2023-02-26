@@ -18,4 +18,5 @@ AVAILABLE SCRIPTS
 In the project directory, you can run:
 
 For server: _npm run server_
+
 For client: _npm start_
