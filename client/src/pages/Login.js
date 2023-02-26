@@ -25,7 +25,9 @@ function Login() {
       if(localStorage.getItem('chat-user')){
         navigate('/')
       }
-    },[])
+    }, [])
+  
+  
     const handleValidation = () => {
 
         if (password === "") {
@@ -50,9 +52,9 @@ function Login() {
 
     const handleSubmit = async(e) =>{
         e.preventDefault()
-        console.log("register");
+        
         if (handleValidation()) {
-            console.log("in login validation")
+            
             try {
                 const response = await axios.post(register_url, 
                     JSON.stringify({
@@ -61,14 +63,13 @@ function Login() {
                     }
 
                     ))
-                    console.log(JSON.stringify(response?.data))
-                    console.log(JSON.stringify(response.status))
+                
                     if (response.status === 200) {
                       localStorage.setItem('chat-user', JSON.stringify(response.data))
                       navigate('/')
                     }
                     if (response.status === 401) {
-                      console.log("resp", response.msg)
+                      
                       toast.error(response.msg, toastOptions)
                     }
             } catch (error) {

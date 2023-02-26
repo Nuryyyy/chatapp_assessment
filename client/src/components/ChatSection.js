@@ -50,7 +50,7 @@ function ChatSection({ currentChat, currentuser }) {
     messages.map((message) => {
         if (message.fromSelf) {
             return (
-                <div className="d-flex flex-row justify-content-end">
+                <div className="d-flex flex-row justify-content-end" key={message._id}>
                     <div>
                         <p className="user-message small p-2 me-3 mb-1 text-white rounded-3 bg-primary">{message.message}</p>  
                         <p className="small me-3 mb-3 rounded-3 text-muted">{new Date(message.time).toLocaleTimeString()}</p>
@@ -60,7 +60,7 @@ function ChatSection({ currentChat, currentuser }) {
             );
         } else {
             return (
-                <div className="d-flex flex-row justify-content-start">
+                <div className="d-flex flex-row justify-content-start" key={message._id}>
                     <img src={ PF + `${currentChat.image}`} alt="avatar 1" className='rounded-circle avatar' />
                     <div>
                         <p className="messagechat small p-2 ms-3 mb-1 rounded-3">{message.message}</p>

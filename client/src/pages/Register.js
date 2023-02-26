@@ -59,9 +59,9 @@ function Register() {
 
     const handleSubmit = async(e) =>{
         e.preventDefault()
-        console.log("register");
+       
         if (handleValidation()) {
-            console.log("in register validation")
+            
             try {
                 const response = await axios.post(register_url, 
                     JSON.stringify({
@@ -72,8 +72,7 @@ function Register() {
                     }
 
                     ))
-                    console.log(JSON.stringify(response?.data))
-                    console.log(JSON.stringify(response.status))
+                    
                     if (response.status === 200) {
                       localStorage.setItem('chat-user', JSON.stringify(response.data))
                       navigate('/')

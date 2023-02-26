@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import Profileview from './Profileview';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
@@ -10,9 +10,25 @@ import '../App.css'
 
 function Topbar() {
 
-  const useravatar = JSON.parse(localStorage.getItem("chat-user"))
+  // const useravatar = JSON.parse(localStorage.getItem("chat-user"))
+
+  const [useravatar, setUseAvatar] = useState("")
   const PF = "http://localhost:4000/upload/"
   const navigate = useNavigate()
+
+
+  useEffect(() => {
+  const fetchCurrentUser = async () => {
+    if (!localStorage.getItem("chat-user")) {
+      navigate("/login");
+    } else {
+      setUseAvatar(
+        JSON.parse(localStorage.getItem("chat-user"))
+      );
+    }
+  };
+  fetchCurrentUser();
+}, []);
 
 
   //handle logout

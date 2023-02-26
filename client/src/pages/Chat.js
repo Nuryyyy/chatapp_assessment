@@ -6,7 +6,7 @@ import Topbar from '../components/Topbar'
 import Contacts from '../components/Contacts'
 import Welcome from "../components/Welcome";
 import ChatSection from "../components/ChatSection";
-import {io} from 'socket.io-client'
+// import {io} from 'socket.io-client'
 
 function Chat() {
 
@@ -35,12 +35,12 @@ function Chat() {
 
 
 
-useEffect(() => {
-  if (currentuser) {
-    socket.current = io(BASE_URL)
-    socket.current.emit("add-user", currentuser.userid)
-  }
-}, [currentuser])
+// useEffect(() => {
+//   if (currentuser) {
+//     socket.current = io(BASE_URL)
+//     socket.current.emit("add-user", currentuser.userid)
+//   }
+// }, [currentuser])
 
 useEffect(() => {
   const getAllUsers = async () => {

@@ -13,16 +13,25 @@ function Profileview() {
   const PF = "http://localhost:4000/upload/"
   
   const [file, setFile] = useState(null)
+  const [currentUser, setCurrentUser] = useState("")
   const navigate = useNavigate()
  
    //to retrieve current avatar of user
-  const currentUser = JSON.parse(localStorage.getItem("chat-user"))
+  // const currentUser = JSON.parse(localStorage.getItem("chat-user"))
 
-  useEffect(()=> {
-    if(localStorage.getItem('chat-user')){
-      navigate('/login')
+useEffect(() => {
+  const fetchCurrentUser = async () => {
+    if (!localStorage.getItem("chat-user")) {
+      navigate("/login");
+    } else {
+      setCurrentUser(
+        JSON.parse(localStorage.getItem("chat-user"))
+      );
     }
-  },[])
+  };
+  fetchCurrentUser();
+}, []);
+
   
   const upload = async () => {
     try {
@@ -50,10 +59,7 @@ function Profileview() {
           "chat-user",
           JSON.stringify(currentUser)
         );
-   
-    
-    // // localStorage.setItem({ "currentUser.image"})
-    //   // window.location.reload() 
+
   } catch (error) {
     console.log(error)
   }
