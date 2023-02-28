@@ -3,13 +3,12 @@ import '../App.css'
 
 function Contacts({ contacts, changeChat }) {
 
-    const contacts_url = '/allusers'
+    
     const PF = "http://localhost:4000/upload/"
 
     const [currentUserName, setCurrentUserName] = useState(undefined);
     const [currentUserImage, setCurrentUserImage] = useState(undefined);
     const [currentSelected, setCurrentSelected] = useState(undefined);
-
 
 
 
@@ -19,7 +18,7 @@ function Contacts({ contacts, changeChat }) {
                 localStorage.getItem("chat-user"))
             setCurrentUserName(data.username)
             setCurrentUserImage(data.image)
-            console.log(data)
+            
         }
 
         getUser()

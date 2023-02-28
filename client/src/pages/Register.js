@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import '../App.css'
 import axios from '../api/axios';
+import { AxiosError } from 'axios';
 
 function Register() {
 
@@ -68,7 +69,7 @@ function Register() {
                         username: username,
                         email: email,
                         password: password,
-                        // confirmPassword: confirmPassword
+                        image: "default.png"
                     }
 
                     ))
@@ -77,11 +78,15 @@ function Register() {
                       localStorage.setItem('chat-user', JSON.stringify(response.data))
                       navigate('/')
                     }
-                    if (response.status === 401) {
-                      toast.error(response.msg, toastOptions)
+                    else {
+                      throw new Error(response.data.msg)
                     }
             } catch (error) {
-                console.log(error)
+                 if (error instanceof AxiosError) {
+        toast.error(error.response?.data?.msg || "Invalid credentials", toastOptions)
+      } else {
+        toast.error(error.message, toastOptions)
+      }
             }
 
             
@@ -153,12 +158,7 @@ function Register() {
                   <label className="form-label" htmlFor="confirmPassword">Repeat your password</label>
                 </div>
 
-                {/* <div className="form-check d-flex justify-content-center mb-5">
-                  <input className="form-check-input me-2" type="checkbox" value="" id="form2Example3cg" />
-                  <label className="form-check-label" for="form2Example3g">
-                    I agree all statements in <a href="#!" className="text-body"><u>Terms of service</u></a>
-                  </label>
-                </div> */}
+              
 
                 <div className="d-flex justify-content-center">
                   <button type="submit"

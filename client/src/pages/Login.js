@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import '../App.css'
 import axios from '../api/axios';
+import { AxiosError } from 'axios';
 
 function Login() {
 
@@ -38,10 +39,7 @@ function Login() {
             toast.error("Username and Password is required", toastOptions)
             return false
         }
-        // else if (email==="") {
-        //     toast.error("Email is required", toastOptions)
-        //     return false
-        // }
+        
         else {
             return true 
         }
@@ -50,40 +48,34 @@ function Login() {
         
     }
 
-    const handleSubmit = async(e) =>{
-        e.preventDefault()
-        
-        if (handleValidation()) {
-            
-            try {
-                const response = await axios.post(register_url, 
-                    JSON.stringify({
-                        username: username,
-                        password: password,
-                    }
+const handleSubmit = async(e) => {
+  e.preventDefault()
 
-                    ))
-                
-                    if (response.status === 200) {
-                      localStorage.setItem('chat-user', JSON.stringify(response.data))
-                      navigate('/')
-                    }
-                    if (response.status === 401) {
-                      
-                      toast.error(response.msg, toastOptions)
-                    }
-            } catch (error) {
-                console.log(error)
-            }
+  if (handleValidation()) {
+    try {
+      const response = await axios.post(register_url, 
+        JSON.stringify({
+          username: username,
+          password: password,
+        }),
+      )
 
-            
-          
-
-            
-        }
-        
-
+      if (response.status === 200) {
+        localStorage.setItem('chat-user', JSON.stringify(response.data))
+        navigate('/')
+      } else {
+        throw new Error(response.data.msg)
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data?.msg || "Invalid credentials", toastOptions)
+      } else {
+        toast.error(error.message, toastOptions)
+      }
     }
+  }
+}
+
     
   return (
     <section className="backgroundImage vh-100 bg-image">
@@ -95,7 +87,7 @@ function Login() {
             <div className="card-body p-5">
               <h2 className="text-uppercase text-center mb-5">Create an account</h2>
 
-              <form onSubmit={handleSubmit} className='register'>
+              <form onSubmit={handleSubmit} className='login'>
 
                 <div className="form-outline mb-4">
                   <input 
@@ -105,7 +97,7 @@ function Login() {
                     className="form-control form-control-lg"
                     value={username}
                     onChange={(e)=>setUsername(e.target.value)}
-                    required />
+                     />
                   <label className="form-label" htmlFor="username">Username</label>
                 </div>
 
